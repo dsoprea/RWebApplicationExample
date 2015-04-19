@@ -1,0 +1,38 @@
+#!/usr/bin/env Rscript
+
+# Bugfix in order to start-up properly:
+#
+#   https://github.com/hadley/testthat/issues/122
+#
+library(methods)
+
+library(Rook)
+
+source('image.r')
+source('ajax.r')
+
+main.app <- Builder$new(
+    # Static assets (images, Javascript, CSS)
+    Static$new(
+        urls = c('/static'),
+        root = '.'
+    ),
+
+    # Webpage serving.
+    Static$new(urls='/html',root='.'), 
+
+    Rook::URLMap$new(
+        '/image' = image.handler,
+        '/ajax/dataset' = dataset.ajax.handler,
+        '/' = Redirect$new('/html/index.html')
+    )
+)
+
+s <- Rhttpd$new()
+s$add(name='project2',app=main.app)
+
+s$start(port=5000)
+
+while (TRUE) {
+    Sys.sleep(0.5);
+}
