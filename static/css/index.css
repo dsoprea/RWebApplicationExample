@@ -3,11 +3,71 @@
 }
 
 #tab-container .tab-pane {
-    margin: 0px 20px;
+    margin-top: 10px;
 }
 
-#tab-container .tab-pane h2 {
-    padding-bottom: 10px;
-    border-bottom: 1px solid black;
-    width: 600px;
+#tab-container .tab-pane .tab-summary {
+    font-style: italic;
+    font-size: 1.2em;
+    padding: 10px 0px;
+    margin-bottom: 5px;
+}
+
+#tab-container .tab-pane .tab-description {
+    font-family: arial;
+    width: 700px;
+    margin-bottom: 10px;
+}
+
+#tab-container .tab-pane .tab-example-code {
+    font-family: courier;
+    margin-bottom: 10px;
+}
+
+#tab-container .tab-pane .tab-example-output {
+    font-family: courier;
+    margin-bottom: 10px;
+}
+
+#tab-container .tab-pane .tab-subsection-heading {
+    margin-bottom: 10px;
+}
+
+#tab-container .tab-pane .tab-example-try {
+    height: 200px;
+    width: 500px;
+    margin-bottom: 10px;
+}
+
+#tab-container .tab-pane .button-bar {
+    margin-bottom: 10px;
+}
+
+#tab-container .tab-pane .tab-subsection-result {
+    display: none;
+}
+
+#tab-container .tab-pane .tab-example-result {
+    margin-bottom: 20px;
+}
+
+#page-footer {
+    margin-top: 20px;
+    color: gainsboro;
+    padding: 20px;
+}
+
+#page-footer a {
+    color: gainsboro;
+}
+
+#history-container {
+    max-height: 300px;
+    overflow: auto;
+    width: 500px;
+}
+
+#error-container {
+    margin-top: 10px;
+    display: none;
 }

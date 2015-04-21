@@ -24,6 +24,8 @@ main.app <- Builder$new(
     Rook::URLMap$new(
         '/image' = image.handler,
         '/ajax/dataset' = dataset.ajax.handler,
+        '/ajax/lambda' = lambda.ajax.handler,
+        '/ajax/history' = history.ajax.handler,
         '/' = Redirect$new('/html/index.html')
     )
 )

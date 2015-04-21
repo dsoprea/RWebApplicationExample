@@ -12,6 +12,9 @@
 
         <script src="/custom/project2/static/js/jquery/jquery-1.11.1.min.js"></script>
         <script src="/custom/project2/static/js/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/custom/project2/static/js/bootbox.min.js"></script>
+        <script src="/custom/project2/static/js/moment.min.js"></script>
+
         <script src="/custom/project2/static/js/global.js"></script>
         <script src="/custom/project2/static/js/index.js"></script>
 
@@ -25,37 +28,207 @@
                 Welcome to this R tutorial.
                 </h1>
                 <p class="lead">
-                Introduce yourself to some basic, statistical operations in R.
+                Here, you will introduce yourself to some basic, statistical operations in R.
                 </p>
             </div>
 
             <div class="body-content">
                 <ul class="nav nav-tabs">
-                  <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
-                  <li><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
-                  <li><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
-                  <li><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+                  <li class="active"><a href="#dataset" role="tab" data-toggle="tab">Dataset</a></li>
+                  <li><a href="#histogram" role="tab" data-toggle="tab">Histogram</a></li>
+                  <li><a href="#density" role="tab" data-toggle="tab">Density Graph</a></li>
+                  <li><a href="#lm" role="tab" data-toggle="tab">Linear Models</a></li>
+                  <li><a href="#spline" role="tab" data-toggle="tab">Spline</a></li>
                 </ul>
             </div>
 
             <div id="tab-container" class="tab-content">
-                <div class="tab-pane active" id="home">
-                    <h2>Generate a Dataset</h2>
+                <div class="alert alert-danger" role="alert" id="error-container">
+
                 </div>
-                <div class="tab-pane" id="profile">
-                    <h2>Generate a Histogram and Density Graph</h2>
+                <div class="tab-pane active" id="dataset">
+                    <div class='tab-description'>
+                        One of the most basic operations in R is to general a vector of random values drawn from a normal distribution.
+                    </div>
+
+                    <div class="tab-subsection-heading">
+                        Example:
+                    </div>
+                    <pre class="tab-example-code">
+x &lt;- rnorm(50)
+x</pre>
+
+                    <div class="tab-subsection-heading">
+                        Output:
+                    </div>
+                    <pre class="tab-example-output">
+ [1]  0.30474673  0.89827615  1.90799242 -0.76242868  1.16985004 -0.42728385
+ [7]  0.99005686 -1.19512060 -0.09525638 -0.12331249 -1.29682964  1.63722120
+[13] -1.18213234  1.28572762  0.74151693 -0.29389237 -2.36450756  1.42128822
+[19] -0.30383890 -0.26081535  0.35092894 -1.40375450  0.92159344  0.81574762
+[25]  0.10817314  0.60073940  0.61536203  0.16314154  1.64372400 -0.93818822
+[31] -3.24803177 -2.19890345  0.89725088  0.46938486  1.53968054 -1.16237427
+[37]  1.38190404  0.85292285 -0.70653711  0.06059059 -0.61111316 -1.06222735
+[43] -0.71132785  0.52739311  0.18763249 -0.94484534 -1.00100533  1.13382684
+[49]  1.32952986  0.24399586</pre>
+
+                    <div class="tab-subsection-heading">
+                        Try it yourself:
+                    </div>
+                    <textarea class="tab-example-try"></textarea>
+
+                    <div class="tab-subsection-result">
+                        <div class="tab-subsection-heading">
+                            Result:
+                        </div>
+                        <pre class="tab-example-result">
+                        </pre>
+                    </div>
+
+                    <div class="button-bar">
+                        <button type="button" class="btn btn-primary" id="dataset-execute-btn">Run</button>
+                    </div>
                 </div>
-                <div class="tab-pane" id="messages">
-                    <h2>Graph Simple Linear Regression</h2>
+                <div class="tab-pane" id="histogram">
+                    <div class='tab-description'>
+                        One basic way to quickly see how a vector is distributed is to plot a histogram. This sorts your dataset into a set of buckets that each represent a portion of the range.
+                    </div>
+
+                    <div class="tab-subsection-heading">
+                        Example:
+                    </div>
+                    <pre class="tab-example-code">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Output:
+                    </div>
+                    <pre class="tab-example-output">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Try it yourself:
+                    </div>
+                    <textarea class="tab-example-try"></textarea>
+
+                    <div class="tab-subsection-result">
+                        <div class="tab-subsection-heading">
+                            Result:
+                        </div>
+                        <pre class="tab-example-result">
+                        </pre>
+                    </div>
+
+                    <div class="button-bar">
+                        <button type="button" class="btn btn-primary" id="histogram-execute-btn">Run</button>
+                    </div>
                 </div>
-                <div class="tab-pane" id="settings">
-                    <h2>Graph Multiple Linear Regression</h2>
+                <div class="tab-pane" id="density">
+                    <div class='tab-description'>
+                        A density plot reduces a histogram to a simple line.
+                    </div>
+
+                    <div class="tab-subsection-heading">
+                        Example:
+                    </div>
+                    <pre class="tab-example-code">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Output:
+                    </div>
+                    <pre class="tab-example-output">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Try it yourself:
+                    </div>
+                    <textarea class="tab-example-try"></textarea>
+
+                    <div class="tab-subsection-result">
+                        <div class="tab-subsection-heading">
+                            Result:
+                        </div>
+                        <pre class="tab-example-result">
+                        </pre>
+                    </div>
+
+                    <div class="button-bar">
+                        <button type="button" class="btn btn-primary" id="density-execute-btn">Run</button>
+                    </div>
+                </div>
+                <div class="tab-pane" id="lm">
+                    <div class='tab-description'>
+                        A simple linear model can calculate the slope and intercept of a line that best fits your data using a single independent variable/predictor/regressor.
+                    </div>
+
+                    <div class="tab-subsection-heading">
+                        Example:
+                    </div>
+                    <pre class="tab-example-code">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Output:
+                    </div>
+                    <pre class="tab-example-output">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Try it yourself:
+                    </div>
+                    <textarea class="tab-example-try"></textarea>
+
+                    <div class="tab-subsection-result">
+                        <div class="tab-subsection-heading">
+                            Result:
+                        </div>
+                        <pre class="tab-example-result">
+                        </pre>
+                    </div>
+
+                    <div class="button-bar">
+                        <button type="button" class="btn btn-primary" id="lm-execute-btn">Run</button>
+                    </div>
+                </div>
+                <div class="tab-pane" id="spline">
+                    <div class='tab-description'>
+                        A spline is a set of separate curves calculated to produce a better fit to the data.
+                    </div>
+
+                    <div class="tab-subsection-heading">
+                        Example:
+                    </div>
+                    <pre class="tab-example-code">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Output:
+                    </div>
+                    <pre class="tab-example-output">
+                    </pre>
+
+                    <div class="tab-subsection-heading">
+                        Try it yourself:
+                    </div>
+                    <textarea class="tab-example-try"></textarea>
+
+                    <div class="tab-subsection-result">
+                        <div class="tab-subsection-heading">
+                            Result:
+                        </div>
+                        <pre class="tab-example-result">
+                        </pre>
+                    </div>
+
+                    <div class="button-bar">
+                        <button type="button" class="btn btn-primary" id="spline-execute-btn">Run</button>
+                    </div>
                 </div>
             </div>
-
-            <div class="page-footer">
-
-            </div>
+        </div>
+        <div id="page-footer">
+            Dustin Oprea (dustin@randomingenuity.com) - STA 4102 Project 2 - <a href='#' id="history-btn">history</a>
         </div>
     </body>
 </html>
