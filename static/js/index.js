@@ -28,19 +28,33 @@ function _clear_error(message) {
     $error.hide();
 }
 
-function hook_try_dataset_execute(ev) {
-    var $tab, code, result_variable_name, $result;
-
-    ev.preventDefault();
-    _clear_error();
-
-    $tab = $('#dataset');
-
+function _clear_result($tab) {
     $result = $tab.find('.tab-subsection-result');
     $result_text = $result.find('.tab-example-result');
+    $result_image = $result.find('.tab-example-result-image');
+
     $result.hide();
     $result_text.text('');
+    $result_image.removeAttr('src');
+}
 
+function _set_result_text($tab, text) {
+    $result = $tab.find('.tab-subsection-result');
+    $result_text = $result.find('.tab-example-result');
+
+    $result_text.text(value);
+    $result.show();
+}
+
+function _set_result_image($tab, encoded_image_data) {
+    $result = $tab.find('.tab-subsection-result');
+    $result_image = $result.find('.tab-example-result-image');
+
+    $result_image.attr('src', encoded_image_data);
+    $result.show();
+}
+
+function _get_and_validate_code($tab) {
     code = $tab.find('.tab-example-try').val();
     code = $.trim(code);
 
@@ -50,6 +64,24 @@ function hook_try_dataset_execute(ev) {
     }
 
     _push_to_history(code);
+
+    return code;
+}
+
+function hook_try_dataset_execute(ev) {
+    var $tab, code, result_variable_name, $result;
+
+    ev.preventDefault();
+    _clear_error();
+
+    $tab = $('#dataset');
+
+    _clear_result($tab);
+
+    code = _get_and_validate_code($tab);
+    if(code == false) {
+        return false;
+    }
 
     result_variable_name = 'x';
 
@@ -76,9 +108,7 @@ function hook_try_dataset_execute(ev) {
         }
 
         value = data['value'][0];
-
-        $result_text.text(value);
-        $result.show();
+        _set_result_text(value);
     }
 
     function error_cb(xhr) {
@@ -90,44 +120,78 @@ function hook_try_dataset_execute(ev) {
         _show_error("Request failed (" + code + "): " + text);
     }
 
-    execute_lambda(code, result_variable_name, success_cb, error_cb);
+    execute_lambda(code, result_variable_name, success_cb, error_cb, false);
 
     return false;
 }
 
-function hook_try_histogram_execute() {
+function hook_try_histogram_execute(ev) {
     var $tab, code;
+
+    ev.preventDefault();
+    _clear_error();
 
     $tab = $('#histogram');
 
-    code = $tab.find('.tab-example-try').val();
-    code = $.trim(code);
+    _clear_result($tab);
 
-    if(code == '') {
-        bootbox.alert("You have not provided any code.");
+    code = _get_and_validate_code($tab);
+    if(code == false) {
         return false;
     }
+
+    function success_cb(encoded_image_data, textStatus, request) {
+        _set_result_image($tab, encoded_image_data);
+    }
+
+    function error_cb(xhr) {
+        var text, code;
+
+        text = xhr.responseText;
+        code = xhr.status;
+
+        _show_error("Request failed (" + code + "): " + text);
+    }
+
+    execute_lambda_for_image(code, success_cb, error_cb);
 
     return false;
 }
 
-function hook_try_density_execute() {
+function hook_try_density_execute(ev) {
     var $tab, code;
+
+    ev.preventDefault();
+    _clear_error();
 
     $tab = $('#density');
 
-    code = $tab.find('.tab-example-try').val();
-    code = $.trim(code);
+    _clear_result($tab);
 
-    if(code == '') {
-        bootbox.alert("You have not provided any code.");
+    code = _get_and_validate_code($tab);
+    if(code == false) {
         return false;
     }
+
+    function success_cb(encoded_image_data, textStatus, request) {
+        _set_result_image($tab, encoded_image_data);
+    }
+
+    function error_cb(xhr) {
+        var text, code;
+
+        text = xhr.responseText;
+        code = xhr.status;
+
+        _show_error("Request failed (" + code + "): " + text);
+    }
+
+    execute_lambda_for_image(code, success_cb, error_cb);
 
     return false;
 }
 
-function hook_try_lm_execute() {
+function hook_try_lm_execute(ev) {
     var $tab, code;
 
     $tab = $('#lm');
@@ -143,7 +207,7 @@ function hook_try_lm_execute() {
     return false;
 }
 
-function hook_try_spline_execute() {
+function hook_try_spline_execute(ev) {
     var $tab, code;
 
     $tab = $('#spline');

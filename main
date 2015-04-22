@@ -8,7 +8,6 @@ library(methods)
 
 library(Rook)
 
-source('image.r')
 source('ajax.r')
 
 main.app <- Builder$new(
@@ -22,9 +21,9 @@ main.app <- Builder$new(
     Static$new(urls='/html',root='.'), 
 
     Rook::URLMap$new(
-        '/image' = image.handler,
         '/ajax/dataset' = dataset.ajax.handler,
-        '/ajax/lambda' = lambda.ajax.handler,
+        '/ajax/lambda/result' = lambda.ajax.handler,
+        '/ajax/lambda/image' = lambda.image.ajax.handler,
         '/ajax/history' = history.ajax.handler,
         '/' = Redirect$new('/html/index.html')
     )

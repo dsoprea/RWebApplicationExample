@@ -48,7 +48,7 @@
                 </div>
                 <div class="tab-pane active" id="dataset">
                     <div class='tab-description'>
-                        One of the most basic operations in R is to general a vector of random values drawn from a normal distribution.
+                        One of the most basic operations in R is to general a vector of random values drawn from a normal distribution. This is what you'll do for this example.
                     </div>
 
                     <div class="tab-subsection-heading">
@@ -91,20 +91,16 @@ x</pre>
                 </div>
                 <div class="tab-pane" id="histogram">
                     <div class='tab-description'>
-                        One basic way to quickly see how a vector is distributed is to plot a histogram. This sorts your dataset into a set of buckets that each represent a portion of the range.
+                        One basic way to quickly see how a vector is distributed is to plot a histogram. This sorts your dataset into a set of buckets that each represent a portion of the range. For this example, you'll generate a dataset and plot a histograph.
                     </div>
 
                     <div class="tab-subsection-heading">
                         Example:
                     </div>
                     <pre class="tab-example-code">
-                    </pre>
-
-                    <div class="tab-subsection-heading">
-                        Output:
-                    </div>
-                    <pre class="tab-example-output">
-                    </pre>
+x &lt;- rnorm(100)
+h &lt;- hist(x)
+</pre>
 
                     <div class="tab-subsection-heading">
                         Try it yourself:
@@ -115,8 +111,7 @@ x</pre>
                         <div class="tab-subsection-heading">
                             Result:
                         </div>
-                        <pre class="tab-example-result">
-                        </pre>
+                        <img class="tab-example-result-image" />
                     </div>
 
                     <div class="button-bar">
@@ -125,20 +120,18 @@ x</pre>
                 </div>
                 <div class="tab-pane" id="density">
                     <div class='tab-description'>
-                        A density plot reduces a histogram to a simple line.
+                        A density plot reduces a histogram to a simple line. For this example, we'll plot a histogram and draw a density-curve on top of it.
                     </div>
 
                     <div class="tab-subsection-heading">
                         Example:
                     </div>
                     <pre class="tab-example-code">
-                    </pre>
-
-                    <div class="tab-subsection-heading">
-                        Output:
-                    </div>
-                    <pre class="tab-example-output">
-                    </pre>
+x &lt;- rnorm(100)
+h &lt;- hist(x, probability=T)
+d &lt;- density(x)
+lines(d)
+</pre>
 
                     <div class="tab-subsection-heading">
                         Try it yourself:
@@ -149,8 +142,7 @@ x</pre>
                         <div class="tab-subsection-heading">
                             Result:
                         </div>
-                        <pre class="tab-example-result">
-                        </pre>
+                        <img class="tab-example-result-image" />
                     </div>
 
                     <div class="button-bar">

@@ -51,6 +51,11 @@
     margin-bottom: 20px;
 }
 
+#tab-container .tab-pane .tab-example-result-image {
+    border: 1px solid gainsboro;
+    margin-bottom: 20px;
+}
+
 #page-footer {
     margin-top: 20px;
     color: gainsboro;
