@@ -40,10 +40,11 @@ function send_request_urlencoded(type, path, parameters, data, success_cb, error
         });
 }
 
-function execute_lambda_for_result(code, result_name, success_cb, error_cb) {
+function execute_lambda_for_result(tab_name, code, result_name, success_cb, error_cb) {
     var parameters, data;
 
     parameters = {
+        tab_name: tab_name,
         result_name: result_name
     }
 
@@ -60,8 +61,12 @@ function execute_lambda_for_result(code, result_name, success_cb, error_cb) {
         error_cb);
 }
 
-function execute_lambda_for_image(code, success_cb, error_cb) {
-    var data;
+function execute_lambda_for_image(tab_name, code, success_cb, error_cb) {
+    var parameters, data;
+
+    parameters = {
+        tab_name: tab_name
+    }
 
     data = {
         code: code
@@ -70,7 +75,7 @@ function execute_lambda_for_image(code, success_cb, error_cb) {
     send_request_urlencoded(
         'post', 
         '/lambda/image', 
-        undefined, 
+        parameters, 
         data, 
         success_cb, 
         error_cb);

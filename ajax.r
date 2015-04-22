@@ -3,25 +3,45 @@ library(base64enc)
 
 source('utility.r')
 
-dataset.ajax.handler <- function(env) {
-    req <- Request$new(env)
+stats.filepath <- '/tmp/r.tutorial.stats.json'
 
-    if(is.null(req$GET()$n)){
-        # Parameters missing.
-        res <- Response$new(status=500)
-        write.text(res, "No 'n' parameter provided.")
+request.counter <- list()
+request.start.time <- list()
+request.avg.time <- list()
+
+tick.request <- function(tab_name) {
+    # Keep track of how often the various exercises are attempted and the 
+    # average time between attempts. Note that since 1) we're running in a 
+    # webpage and 2) R doesn't keep track of the history for eval'd code, we 
+    # write the "report" for *every* execution. That way, there's a report 
+    # waiting when the application is actually terminated.
+
+    if(is.null(request.counter[[tab_name]])) {
+        request.counter[[tab_name]] <<- 1
     } else {
-        # Parameters found. Generate dataset.
-
-        res <- Response$new()
-
-        n <- as.integer(req$GET()$n)
-        x <- rnorm(n)
-
-        write.json(res, x)
+        request.counter[[tab_name]] <<- request.counter[[tab_name]] + 1
     }
 
-    res$finish()
+    if(is.null(request.start.time[[tab_name]])) {
+        request.start.time[[tab_name]] <<- Sys.time()
+    } else {
+        now.time <- Sys.time()
+        start.time <- request.start.time[[tab_name]]
+
+        delta <- difftime(now.time, start.time, units="secs")
+        elapsed_s <- as.numeric(delta)
+
+        request.avg.time[[tab_name]] <<- elapsed_s / request.counter[[tab_name]]
+    }
+
+    j <- toJSON(list(
+                counters=request.counter, 
+                avg.times.s=request.avg.time
+            ))
+    
+    f <- file(stats.filepath)
+    writeLines(j, f)
+    close(f)
 }
 
 eval.code <- function(code, result_name=NULL) {
@@ -58,7 +78,11 @@ lambda.ajax.handler <- function(env) {
 
     req <- Request$new(env)
 
-    if(is.null(req$GET()$result_name)){
+    if(is.null(req$GET()$tab_name)) {
+        # Parameters missing.
+        res <- Response$new(status=500)
+        write.text(res, "No 'tab_name' parameter provided.")
+    } else if(is.null(req$GET()$result_name)) {
         # Parameters missing.
         res <- Response$new(status=500)
         write.text(res, "No 'result_name' parameter provided.")
@@ -68,6 +92,8 @@ lambda.ajax.handler <- function(env) {
         write.text(res, "POST-data missing. Please provide code.")
     } else {
         # Execute code and return the result.
+
+        tick.request(req$GET()$tab_name)
 
         res <- Response$new()
 
@@ -88,12 +114,18 @@ lambda.image.ajax.handler <- function(env) {
 
     req <- Request$new(env)
 
-    if(is.null(req$POST())) {
+    if(is.null(req$GET()$tab_name)) {
+        # Parameters missing.
+        res <- Response$new(status=500)
+        write.text(res, "No 'tab_name' parameter provided.")
+    } else if(is.null(req$POST())) {
         # Body missing.
         res <- Response$new(status=500)
         write.text(res, "POST-data missing. Please provide code.")
     } else {
         # Execute code and return the result.
+
+        tick.request(req$GET()$tab_name)
 
         # If we're returning an image, set the content-type and redirect 
         # the graphics device to a file.
@@ -126,24 +158,6 @@ lambda.image.ajax.handler <- function(env) {
             res$write(data_uri)
         }
     }
-
-    res$finish()
-}
-
-history.ajax.handler <- function(env) {
-
-    # We don't actually use this since eval() doesn't affect the command-history at all.
-
-    req <- Request$new(env)
-
-    res <- Response$new()
-
-    filepath <- '.r_tutorial_history'
-    savehistory(filepath)
-    h <- scan(filepath, 'character')
-    unlink(filepath)
-
-    write.json(res, list(history=h))
 
     res$finish()
 }

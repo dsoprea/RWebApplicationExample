@@ -120,7 +120,13 @@ function hook_try_dataset_execute(ev) {
         _show_error("Request failed (" + code + "): " + text);
     }
 
-    execute_lambda_for_result(code, result_variable_name, success_cb, error_cb, false);
+    execute_lambda_for_result(
+        'dataset', 
+        code, 
+        result_variable_name, 
+        success_cb, 
+        error_cb, 
+        false);
 
     return false;
 }
@@ -153,7 +159,11 @@ function hook_try_histogram_execute(ev) {
         _show_error("Request failed (" + code + "): " + text);
     }
 
-    execute_lambda_for_image(code, success_cb, error_cb);
+    execute_lambda_for_image(
+        'histogram', 
+        code, 
+        success_cb, 
+        error_cb);
 
     return false;
 }
@@ -186,7 +196,11 @@ function hook_try_density_execute(ev) {
         _show_error("Request failed (" + code + "): " + text);
     }
 
-    execute_lambda_for_image(code, success_cb, error_cb);
+    execute_lambda_for_image(
+        'density',
+        code, 
+        success_cb, 
+        error_cb);
 
     return false;
 }
@@ -219,7 +233,11 @@ function hook_try_lm_execute(ev) {
         _show_error("Request failed (" + code + "): " + text);
     }
 
-    execute_lambda_for_image(code, success_cb, error_cb);
+    execute_lambda_for_image(
+        'lm',
+        code, 
+        success_cb, 
+        error_cb);
 
     return false;
 }
@@ -252,7 +270,11 @@ function hook_try_spline_execute(ev) {
         _show_error("Request failed (" + code + "): " + text);
     }
 
-    execute_lambda_for_image(code, success_cb, error_cb);
+    execute_lambda_for_image(
+        'spline',
+        code, 
+        success_cb, 
+        error_cb);
 
     return false;
 }
