@@ -42,7 +42,7 @@ function _set_result_text($tab, text) {
     $result = $tab.find('.tab-subsection-result');
     $result_text = $result.find('.tab-example-result');
 
-    $result_text.text(value);
+    $result_text.text(text);
     $result.show();
 }
 
@@ -69,7 +69,7 @@ function _get_and_validate_code($tab) {
 }
 
 function hook_try_dataset_execute(ev) {
-    var $tab, code, result_variable_name, $result;
+    var $tab, code, result_variable_name;
 
     ev.preventDefault();
     _clear_error();
@@ -108,7 +108,7 @@ function hook_try_dataset_execute(ev) {
         }
 
         value = data['value'][0];
-        _set_result_text(value);
+        _set_result_text($tab, value);
     }
 
     function error_cb(xhr) {
@@ -120,7 +120,7 @@ function hook_try_dataset_execute(ev) {
         _show_error("Request failed (" + code + "): " + text);
     }
 
-    execute_lambda(code, result_variable_name, success_cb, error_cb, false);
+    execute_lambda_for_result(code, result_variable_name, success_cb, error_cb, false);
 
     return false;
 }
@@ -194,15 +194,32 @@ function hook_try_density_execute(ev) {
 function hook_try_lm_execute(ev) {
     var $tab, code;
 
+    ev.preventDefault();
+    _clear_error();
+
     $tab = $('#lm');
 
-    code = $tab.find('.tab-example-try').val();
-    code = $.trim(code);
+    _clear_result($tab);
 
-    if(code == '') {
-        bootbox.alert("You have not provided any code.");
+    code = _get_and_validate_code($tab);
+    if(code == false) {
         return false;
     }
+
+    function success_cb(encoded_image_data, textStatus, request) {
+        _set_result_image($tab, encoded_image_data);
+    }
+
+    function error_cb(xhr) {
+        var text, code;
+
+        text = xhr.responseText;
+        code = xhr.status;
+
+        _show_error("Request failed (" + code + "): " + text);
+    }
+
+    execute_lambda_for_image(code, success_cb, error_cb);
 
     return false;
 }
@@ -210,15 +227,32 @@ function hook_try_lm_execute(ev) {
 function hook_try_spline_execute(ev) {
     var $tab, code;
 
+    ev.preventDefault();
+    _clear_error();
+
     $tab = $('#spline');
 
-    code = $tab.find('.tab-example-try').val();
-    code = $.trim(code);
+    _clear_result($tab);
 
-    if(code == '') {
-        bootbox.alert("You have not provided any code.");
+    code = _get_and_validate_code($tab);
+    if(code == false) {
         return false;
     }
+
+    function success_cb(encoded_image_data, textStatus, request) {
+        _set_result_image($tab, encoded_image_data);
+    }
+
+    function error_cb(xhr) {
+        var text, code;
+
+        text = xhr.responseText;
+        code = xhr.status;
+
+        _show_error("Request failed (" + code + "): " + text);
+    }
+
+    execute_lambda_for_image(code, success_cb, error_cb);
 
     return false;
 }

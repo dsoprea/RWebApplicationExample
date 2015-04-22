@@ -48,29 +48,24 @@
                 </div>
                 <div class="tab-pane active" id="dataset">
                     <div class='tab-description'>
-                        One of the most basic operations in R is to general a vector of random values drawn from a normal distribution. This is what you'll do for this example.
+                        One of the most basic operations in R is to general a vector of random values drawn from a normal distribution. This is what you'll do for this example.<br /><br />
+
+                        When you try the example, make sure to assign your dataset to a variable named "x".
                     </div>
 
                     <div class="tab-subsection-heading">
                         Example:
                     </div>
                     <pre class="tab-example-code">
-x &lt;- rnorm(50)
-x</pre>
+x &lt;- rnorm(10)
+</pre>
 
                     <div class="tab-subsection-heading">
-                        Output:
+                        Example output:
                     </div>
                     <pre class="tab-example-output">
- [1]  0.30474673  0.89827615  1.90799242 -0.76242868  1.16985004 -0.42728385
- [7]  0.99005686 -1.19512060 -0.09525638 -0.12331249 -1.29682964  1.63722120
-[13] -1.18213234  1.28572762  0.74151693 -0.29389237 -2.36450756  1.42128822
-[19] -0.30383890 -0.26081535  0.35092894 -1.40375450  0.92159344  0.81574762
-[25]  0.10817314  0.60073940  0.61536203  0.16314154  1.64372400 -0.93818822
-[31] -3.24803177 -2.19890345  0.89725088  0.46938486  1.53968054 -1.16237427
-[37]  1.38190404  0.85292285 -0.70653711  0.06059059 -0.61111316 -1.06222735
-[43] -0.71132785  0.52739311  0.18763249 -0.94484534 -1.00100533  1.13382684
-[49]  1.32952986  0.24399586</pre>
+ [1]  1.3643924  1.0024173  2.3539712 -1.4895130  0.5603989  1.2948002
+ [7]  1.8508344  0.6011462 -0.4976211  0.7420345</pre>
 
                     <div class="tab-subsection-heading">
                         Try it yourself:
@@ -91,7 +86,7 @@ x</pre>
                 </div>
                 <div class="tab-pane" id="histogram">
                     <div class='tab-description'>
-                        One basic way to quickly see how a vector is distributed is to plot a histogram. This sorts your dataset into a set of buckets that each represent a portion of the range. For this example, you'll generate a dataset and plot a histograph.
+                        One basic way to quickly see how a vector is distributed is to plot a histogram. This sorts your dataset into a set of buckets that each represent a slice of the range. For this example, you'll generate a dataset and plot a histograph.
                     </div>
 
                     <div class="tab-subsection-heading">
@@ -120,7 +115,7 @@ h &lt;- hist(x)
                 </div>
                 <div class="tab-pane" id="density">
                     <div class='tab-description'>
-                        A density plot reduces a histogram to a simple line. For this example, we'll plot a histogram and draw a density-curve on top of it.
+                        A density plot takes a histogram made to reflect the portion of samples found in each bucket and reduces it to a curve. For this example, we'll plot a histogram and draw a density-curve on top of it.
                     </div>
 
                     <div class="tab-subsection-heading">
@@ -151,20 +146,17 @@ lines(d)
                 </div>
                 <div class="tab-pane" id="lm">
                     <div class='tab-description'>
-                        A simple linear model can calculate the slope and intercept of a line that best fits your data using a single independent variable/predictor/regressor.
+                        A simple linear model will calculate a linear equation that best fits your data (using a single independent variable/predictor/regressor). For this example, we'll use the builtin <i>cars</i> dataset.
                     </div>
 
                     <div class="tab-subsection-heading">
                         Example:
                     </div>
                     <pre class="tab-example-code">
-                    </pre>
-
-                    <div class="tab-subsection-heading">
-                        Output:
-                    </div>
-                    <pre class="tab-example-output">
-                    </pre>
+plot(speed ~ dist, data=cars)
+cars.lm = lm(speed ~ dist, data=cars)
+abline(cars.lm)
+</pre>
 
                     <div class="tab-subsection-heading">
                         Try it yourself:
@@ -175,8 +167,7 @@ lines(d)
                         <div class="tab-subsection-heading">
                             Result:
                         </div>
-                        <pre class="tab-example-result">
-                        </pre>
+                        <img class="tab-example-result-image" />
                     </div>
 
                     <div class="button-bar">
@@ -185,20 +176,23 @@ lines(d)
                 </div>
                 <div class="tab-pane" id="spline">
                     <div class='tab-description'>
-                        A spline is a set of separate curves calculated to produce a better fit to the data.
+                        A spline is a set of separate curves calculated to produce a better fit to the data. For this example, we'll plot a spline with degrees-of-freedome (4) through a data-frame in the <i>DAAG</i> dataset.
                     </div>
 
                     <div class="tab-subsection-heading">
                         Example:
                     </div>
                     <pre class="tab-example-code">
-                    </pre>
+library(DAAG)
+library(splines)
 
-                    <div class="tab-subsection-heading">
-                        Output:
-                    </div>
-                    <pre class="tab-example-output">
-                    </pre>
+plot(thickness ~ distance, data=geophones)
+
+df &lt;- 4
+lmb &lt;- lm(thickness ~ bs(distance, df), data=geophones)
+ord &lt;- order(geophones$distance)
+lines(geophones$distance[ord], fitted(lmb)[ord])
+</pre>
 
                     <div class="tab-subsection-heading">
                         Try it yourself:
@@ -209,8 +203,7 @@ lines(d)
                         <div class="tab-subsection-heading">
                             Result:
                         </div>
-                        <pre class="tab-example-result">
-                        </pre>
+                        <img class="tab-example-result-image" />
                     </div>
 
                     <div class="button-bar">
