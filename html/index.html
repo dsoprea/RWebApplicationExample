@@ -28,7 +28,7 @@
                 Welcome to this R tutorial.
                 </h1>
                 <p class="lead">
-                Here, you will introduce yourself to some basic, statistical operations in R.
+                Introduce yourself to some basic tasks in R.
                 </p>
             </div>
 
@@ -176,7 +176,7 @@ abline(cars.lm)
                 </div>
                 <div class="tab-pane" id="spline">
                     <div class='tab-description'>
-                        A spline is a set of separate curves calculated to produce a better fit to the data. For this example, we'll plot a spline with degrees-of-freedome (4) through a data-frame in the <i>DAAG</i> dataset.
+                        A spline is a set of separate curves calculated to produce a better fit to the data. For this example, we'll plot a spline with degrees-of-freedome (6) through a data-frame in the <i>DAAG</i> dataset.
                     </div>
 
                     <div class="tab-subsection-heading">
@@ -188,7 +188,7 @@ library(splines)
 
 plot(thickness ~ distance, data=geophones)
 
-df &lt;- 4
+df &lt;- 6
 lmb &lt;- lm(thickness ~ bs(distance, df), data=geophones)
 ord &lt;- order(geophones$distance)
 lines(geophones$distance[ord], fitted(lmb)[ord])
