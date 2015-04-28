@@ -3,7 +3,8 @@ library(base64enc)
 
 source('utility.r')
 
-stats.filepath <- '/tmp/r.tutorial.stats.json'
+stats.filepath <- paste(tempdir(), 'r.tutorial.stats.json', sep='/')
+print(paste("Session stats file-path: ", stats.filepath))
 
 request.counter <- list()
 request.start.time <- list()
