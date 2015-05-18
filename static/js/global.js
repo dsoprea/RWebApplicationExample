@@ -5,7 +5,7 @@ function send_request_json(type, path, parameters, data, success_cb, error_cb) {
         parameters = {}
     }
 
-    url = '/custom/project2/ajax' + path;
+    url = '/custom/test_project/ajax' + path;
 
     if(parameters) {
         url += '?' + $.param(parameters);
@@ -25,7 +25,7 @@ function send_request_json(type, path, parameters, data, success_cb, error_cb) {
 function send_request_urlencoded(type, path, parameters, data, success_cb, error_cb) {
     var url;
 
-    url = '/custom/project2/ajax' + path;
+    url = '/custom/test_project/ajax' + path;
 
     if(parameters) {
         url += '?' + $.param(parameters);

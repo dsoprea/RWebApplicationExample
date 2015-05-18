@@ -66,12 +66,6 @@
     color: gainsboro;
 }
 
-#history-container {
-    max-height: 300px;
-    overflow: auto;
-    width: 500px;
-}
-
 #error-container {
     margin-top: 10px;
     display: none;

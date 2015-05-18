@@ -28,7 +28,7 @@ main.app <- Builder$new(
 )
 
 s <- Rhttpd$new()
-s$add(name='project2',app=main.app)
+s$add(name='test_project',app=main.app)
 
 s$start(port=5000)
 

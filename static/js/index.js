@@ -1,17 +1,3 @@
-var _history = "";
-
-function _push_to_history(code) {
-    // Since we plan on simply dumping this information, we won't worry about 
-    // splitting the code into separate lines. We'll just append it to a 
-    // buffer.
-
-    var time_phrase;
-
-    time_phrase = moment().format('MMMM Do YYYY, h:mm:ss a');
-
-    _history += "# " + time_phrase + "\n\n" + code + "\n\n";
-}
-
 function _show_error(message) {
     var $error;
 
@@ -62,8 +48,6 @@ function _get_and_validate_code($tab) {
         _show_error("You have not provided any code.");
         return false;
     }
-
-    _push_to_history(code);
 
     return code;
 }
@@ -279,35 +263,12 @@ function hook_try_spline_execute(ev) {
     return false;
 }
 
-function history_click(ev) {
-    var message;
-
-    ev.preventDefault();
-
-    if(_history) {
-        bootbox.dialog({
-            title: "Command History",
-            message: '<pre id="history-container">' + _history + '</pre>',
-            buttons: {
-                success: {
-                    label: "Close",
-                    className: "btn-primary"
-                }
-            }
-        });
-    } else {
-        bootbox.alert("No history has been recorded yet.");
-    }
-}
-
 function hook_try_buttons() {
     $('#dataset-execute-btn').click(hook_try_dataset_execute);
     $('#histogram-execute-btn').click(hook_try_histogram_execute);
     $('#density-execute-btn').click(hook_try_density_execute);
     $('#lm-execute-btn').click(hook_try_lm_execute);
     $('#spline-execute-btn').click(hook_try_spline_execute);
-
-    $('#history-btn').click(history_click);
 }
 
 function hook_events() {

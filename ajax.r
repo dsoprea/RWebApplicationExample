@@ -3,48 +3,6 @@ library(base64enc)
 
 source('utility.r')
 
-stats.filepath <- paste(tempdir(), 'r.tutorial.stats.json', sep='/')
-print(paste("Session stats file-path: ", stats.filepath))
-
-request.counter <- list()
-request.start.time <- list()
-request.avg.time <- list()
-
-tick.request <- function(tab_name) {
-    # Keep track of how often the various exercises are attempted and the 
-    # average time between attempts. Note that since 1) we're running in a 
-    # webpage and 2) R doesn't keep track of the history for eval'd code, we 
-    # write the "report" for *every* execution. That way, there's a report 
-    # waiting when the application is actually terminated.
-
-    if(is.null(request.counter[[tab_name]])) {
-        request.counter[[tab_name]] <<- 1
-    } else {
-        request.counter[[tab_name]] <<- request.counter[[tab_name]] + 1
-    }
-
-    if(is.null(request.start.time[[tab_name]])) {
-        request.start.time[[tab_name]] <<- Sys.time()
-    } else {
-        now.time <- Sys.time()
-        start.time <- request.start.time[[tab_name]]
-
-        delta <- difftime(now.time, start.time, units="secs")
-        elapsed_s <- as.numeric(delta)
-
-        request.avg.time[[tab_name]] <<- elapsed_s / request.counter[[tab_name]]
-    }
-
-    j <- toJSON(list(
-                counters=request.counter, 
-                avg.times.s=request.avg.time
-            ))
-    
-    f <- file(stats.filepath)
-    writeLines(j, f)
-    close(f)
-}
-
 eval.code <- function(code, result_name=NULL) {
     message <- NULL
     cb_error <- function(e) {
@@ -94,8 +52,6 @@ lambda.ajax.handler <- function(env) {
     } else {
         # Execute code and return the result.
 
-        tick.request(req$GET()$tab_name)
-
         res <- Response$new()
 
         result_name <- req$GET()$result_name
@@ -125,8 +81,6 @@ lambda.image.ajax.handler <- function(env) {
         write.text(res, "POST-data missing. Please provide code.")
     } else {
         # Execute code and return the result.
-
-        tick.request(req$GET()$tab_name)
 
         # If we're returning an image, set the content-type and redirect 
         # the graphics device to a file.
